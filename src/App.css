@@ -9,3 +9,8 @@
   padding: 20px;
   border-bottom: 1px solid lightgray;
 }
+
+form {
+  display: flex;
+  flex-direction: column;
+}

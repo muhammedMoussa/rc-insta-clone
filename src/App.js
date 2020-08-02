@@ -7,11 +7,14 @@ import './App.css'
 import Header from './components/Header/Header'
 import Post from './components/Post/Post'
 import Login from './components/Login/Login'
+import Signup from './components/Signup/Signup'
 
 function App() {
   const [posts, setPosts] = useState([]);
   const [open, setOpen] = useState(false);
+  const [signupOpen, setSignupOpen] = useState(false);
   const [loginData, setLoginData] = useState([]);
+  const [signupData, setSignupData] = useState([]);
 
 
   useEffect(() => {
@@ -30,11 +33,17 @@ function App() {
   }, [loginData])
 
 
+  useEffect(() => {
+    if(signupData[0] &&  signupData[1]) {
+      alert(`email: ${signupData[0]}, \n pass: ${signupData[1]}`)
+    }
+  }, [signupData])
+
+
   return (
     <div className='app'>
-      <Button type="button" onClick={() => setOpen(true)}>
-        Login
-      </Button>
+      <Button onClick={() => setOpen(true)}>Login</Button>
+      <Button onClick={() => setSignupOpen(true)}>Signup</Button>
 
       <Login 
         open={open}
@@ -43,6 +52,15 @@ function App() {
           setOpen(false)
         }}
         handleLogin={setLoginData}
+      />
+
+      <Signup 
+        open={signupOpen}
+        handleClose={() => {
+          setSignupData([])
+          setSignupOpen(false)
+        }}
+        handleSignup={setSignupData}
       />
 
       <Header/>

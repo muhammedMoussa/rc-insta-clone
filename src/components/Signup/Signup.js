@@ -23,11 +23,12 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
   
-function Login({open, handleClose, handleLogin}) {
+function Signup({open, handleClose, handleSignup}) {
     const classes = useStyles();
     const [modalStyle] = useState(getModalStyle);
-    const [email, setEmail] = useState('me@hi.com')
-    const [password, setPassword] = useState('pass')
+    const [username, setUsername] = useState('')
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
 
     return (
         <Modal
@@ -40,13 +41,16 @@ function Login({open, handleClose, handleLogin}) {
         >
             <div style={modalStyle} className={classes.paper}>
                 <form>
+                    <Input type="text" value={username} onChange={e => setUsername(e.target.value)}></Input>
                     <Input type="text" value={email} onChange={e => setEmail(e.target.value)}></Input>
                     <Input type="password" value={password} onChange={e => setPassword(e.target.value)}></Input>
-                    <Button onClick={() => handleLogin([email, password])}>Login</Button>  
+                    <Button onClick={(e) => handleSignup([username, email, password])}>
+                        Signup
+                    </Button>  
                 </form>
             </div>
       </Modal>
     )
 }
 
-export default Login
+export default Signup
