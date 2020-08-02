@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
   
-function Login({open, handleClose, handleLogin}) {
+function Login({open, handleClose, handleLogin, disabled}) {
     const classes = useStyles();
     const [modalStyle] = useState(getModalStyle);
     const [email, setEmail] = useState('')
@@ -48,7 +48,7 @@ function Login({open, handleClose, handleLogin}) {
                     />
                     <Input placeholder="Email" type="email" value={email} onChange={e => setEmail(e.target.value)}></Input>
                     <Input placeholder="Password" type="password" value={password} onChange={e => setPassword(e.target.value)}></Input>
-                    <Button   variant="contained" color="primary" onClick={() => handleLogin([email, password])}>Login</Button>  
+                    <Button disabled={disabled} variant="contained" color="primary" onClick={() => handleLogin([email, password])}>Login</Button>  
                 </form>
             </div>
       </Modal>

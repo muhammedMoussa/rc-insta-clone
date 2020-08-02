@@ -8,6 +8,8 @@ import Header from './components/Header/Header'
 import Post from './components/Post/Post'
 import Login from './components/Login/Login'
 import Signup from './components/Signup/Signup'
+import Uploader from './components/Uploader/Uploader'
+import RcInstaCloneBackdrop from './components/Backdrop/RcInstaCloneBackdrop'
 
 // @TODO: HANDLE ERROR DISPLAY IN SNACKBAR
 
@@ -18,6 +20,11 @@ function App() {
   const [loginData, setLoginData] = useState([]);
   const [signupData, setSignupData] = useState([]);
   const [user, setUser] = useState(null);
+  const [backdropOpen, setBackdropOpen] = useState(false)
+  const [loginDisabled, setLoginDisabled] = useState(false)
+  const [signupDisabled, setSignupDisabled] = useState(false)
+
+  
   // const [snackbarOpen, setSnackbarOpen] = useState(null);
   // const [snackbarmessage, setSnackbarmessage] = useState(null);
 
@@ -48,6 +55,8 @@ function App() {
     const password = loginData[1];
 
     if (email && password) {
+      setBackdropOpen(true)
+      setLoginDisabled(true)
       auth.signInWithEmailAndPassword(email, password)
         .catch(error => {
           alert(error.message)
@@ -55,7 +64,11 @@ function App() {
           // setSnackbarmessage(error.message)
           }
         )
-        .finally(() => setLoginOpen(false))
+        .finally(() => {
+          setBackdropOpen(false)
+          setLoginDisabled(false)
+          setLoginOpen(false)
+        })
     }
   }, [loginData])
 
@@ -66,6 +79,8 @@ function App() {
     const password = signupData[2];
 
     if (email && password) {
+      setBackdropOpen(true)
+      setSignupDisabled(true)
       auth.createUserWithEmailAndPassword(email, password)
         .then(user => user.user.updateProfile({
           displayName: username
@@ -76,7 +91,11 @@ function App() {
           // setSnackbarmessage(error.message)
           }
         )
-        .finally(() => setSignupOpen(false))
+        .finally(() => {
+          setBackdropOpen(false)
+          setSignupOpen(false)
+          setSignupDisabled(false)
+        })
     }
   }, [signupData])
 
@@ -94,6 +113,7 @@ function App() {
 
       <Login 
         open={loginOpen}
+        disabled={loginDisabled}
         handleClose={() => {
           setLoginData([])
           setLoginOpen(false)
@@ -103,6 +123,7 @@ function App() {
 
       <Signup 
         open={signupOpen}
+        disabled={signupDisabled}
         handleClose={() => {
           setSignupData([])
           setSignupOpen(false)
@@ -121,8 +142,14 @@ function App() {
         />
         ))
       }
-
+      
+      {user ? (
+        <Uploader username={user.displayName}/>
+      ) : (
+        <h3>You need to login first for uploading posts.</h3>
+      )}
       {/* <Snackbar open={snackbarOpen} message={snackbarmessage}/> */}
+      <RcInstaCloneBackdrop open={backdropOpen}  />
     </div>
   );
 }
