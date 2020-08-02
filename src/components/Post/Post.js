@@ -21,7 +21,7 @@ function Post({username, caption, imageUrl}) {
                 load="lazy"
                 alt="logo"
             />
-            <h4 className="post_text"><strong>{username}:</strong>{caption}</h4>
+            <h4 className="post_text"><strong>{username}: </strong>{caption}</h4>
         </div>
     )
 }
