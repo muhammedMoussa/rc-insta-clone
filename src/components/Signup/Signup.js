@@ -41,10 +41,16 @@ function Signup({open, handleClose, handleSignup}) {
         >
             <div style={modalStyle} className={classes.paper}>
                 <form>
-                    <Input type="text" value={username} onChange={e => setUsername(e.target.value)}></Input>
-                    <Input type="text" value={email} onChange={e => setEmail(e.target.value)}></Input>
-                    <Input type="password" value={password} onChange={e => setPassword(e.target.value)}></Input>
-                    <Button onClick={(e) => handleSignup([username, email, password])}>
+                    <img 
+                        className="app__header__img"
+                        src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png"
+                        load="lazy"
+                        alt="logo"
+                    />
+                    <Input placeholder="Username" type="text" value={username} onChange={e => setUsername(e.target.value)}></Input>
+                    <Input placeholder="Email" type="email" value={email} onChange={e => setEmail(e.target.value)}></Input>
+                    <Input placeholder="Password" type="password" value={password} onChange={e => setPassword(e.target.value)}></Input>
+                    <Button  variant="contained" color="primary" onClick={(e) => handleSignup([username, email, password])}>
                         Signup
                     </Button>  
                 </form>

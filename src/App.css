@@ -14,3 +14,7 @@ form {
   display: flex;
   flex-direction: column;
 }
+
+form div {
+  margin: 10px 0;
+}

@@ -26,8 +26,8 @@ const useStyles = makeStyles((theme) => ({
 function Login({open, handleClose, handleLogin}) {
     const classes = useStyles();
     const [modalStyle] = useState(getModalStyle);
-    const [email, setEmail] = useState('me@hi.com')
-    const [password, setPassword] = useState('pass')
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
 
     return (
         <Modal
@@ -40,9 +40,15 @@ function Login({open, handleClose, handleLogin}) {
         >
             <div style={modalStyle} className={classes.paper}>
                 <form>
-                    <Input type="text" value={email} onChange={e => setEmail(e.target.value)}></Input>
-                    <Input type="password" value={password} onChange={e => setPassword(e.target.value)}></Input>
-                    <Button onClick={() => handleLogin([email, password])}>Login</Button>  
+                    <img 
+                        className="app__header__img"
+                        src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png"
+                        load="lazy"
+                        alt="logo"
+                    />
+                    <Input placeholder="Email" type="email" value={email} onChange={e => setEmail(e.target.value)}></Input>
+                    <Input placeholder="Password" type="password" value={password} onChange={e => setPassword(e.target.value)}></Input>
+                    <Button   variant="contained" color="primary" onClick={() => handleLogin([email, password])}>Login</Button>  
                 </form>
             </div>
       </Modal>
