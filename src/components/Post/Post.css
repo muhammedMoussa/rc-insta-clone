@@ -1,0 +1,4 @@
+.post__img {
+    object-fit: contain;
+    width: 100%;
+}
