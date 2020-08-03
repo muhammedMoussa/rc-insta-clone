@@ -1,9 +1,45 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import Avatar from '@material-ui/core/Avatar';
 
 import './Post.css';
+import {db, serverTimestamp} from '../../firebase';
+import { Input, IconButton } from '@material-ui/core';
+import Send from '@material-ui/icons/Send';
 
-function Post({username, caption, imageUrl}) {
+function Post({postId, username, caption, imageUrl, loggedUser}) {
+    const [comments, setComments] = useState([]);
+    const [comment, setComment] = useState('');
+
+    useEffect(() => {
+        let subs;
+        if(postId) {
+            subs = db
+                .collection('posts')
+                .doc(postId)
+                .collection('comments')
+                .onSnapshot(snapshot => {
+                    setComments(snapshot.docs.map(doc => ({
+                        id: doc.id,
+                        comment: doc.data()
+                    })))
+                })
+        }
+
+        return () => subs();
+    }, [postId])
+
+
+    const cmntsBox = () => comments?.map(({id, comment}) => (<p key={id}><strong>{comment.username}: </strong>{comment.body}</p>))
+
+    const postComment = () => {
+        db.collection('posts').doc(postId).collection('comments').add({
+            body: comment,
+            username: loggedUser,
+            timestamp: serverTimestamp
+        })
+        setComment('')
+    }
+
     return (
         <div className="post">
             <div className="post__header">
@@ -15,13 +51,31 @@ function Post({username, caption, imageUrl}) {
                 />
                 <h3>{username}</h3>
             </div>
-            <img 
-                className="app__header__img"
-                src={imageUrl}
-                load="lazy"
-                alt="logo"
-            />
+            <img className="app__header__img" src={imageUrl} load="lazy" alt="image"/>
             <h4 className="post_text"><strong>{username}: </strong>{caption}</h4>
+
+            <div className="post__comments">
+                {cmntsBox()}
+            </div>
+
+            <div className="post__commentBox">
+                {loggedUser ? (
+                    <div>
+                        <Input
+                            className="post__input"
+                            type="text"
+                            placeholder="Add Comment"
+                            value={comment}
+                            onChange={e => setComment(e.target.value)}
+                        ></Input>
+                        <IconButton className="post__sendBtn" color="primary" onClick={postComment} component="span" disabled={!comment}>
+                            <Send />
+                        </IconButton>
+                    </div>
+                ) : (
+                    <p className="post__comments">You need to login for add comment</p>
+                )}
+            </div>
         </div>
     )
 }

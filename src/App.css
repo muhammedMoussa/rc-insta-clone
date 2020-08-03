@@ -1,6 +1,6 @@
 .app {
   background-color: #fafafa;
-  height: 100vh !important;
+  /* height: 100vh !important; */
 }
 
 .app__header {
@@ -8,6 +8,9 @@
   display: flex;
   justify-content: space-between;
   margin-bottom: 10px;
+  position: sticky;
+  top: 0;
+  z-index: 1;
 }
 
 .app__header div {
@@ -33,6 +36,12 @@ form div {
 
 .app__posts {
   padding: 20px;
-  height: 100vh;
-background-color: inherit;
+  /* height: 100vh; */
+  background-color: inherit;
+  display: flex;
+  justify-content: center;
+}
+
+.app_postsRight {
+  margin-left: 25px;
 }
