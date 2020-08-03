@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function Header() {
+export default function Header({children}) {
     return (
         <div className="app__header">
             <img 
@@ -9,6 +9,7 @@ export default function Header() {
                 load="lazy"
                 alt="logo"
             />
+            {children}
         </div>
     )
 }

@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import {Button} from '@material-ui/core'
+import InstagramEmbed from 'react-instagram-embed';
 
 import {db, auth} from './firebase'
 import './App.css'
@@ -102,15 +103,6 @@ function App() {
 
   return (
     <div className='app'>
-      {user ? (
-        <Button onClick={() => auth.signOut()}>Logout</Button>
-      ) : (
-        <div className="app__login__btns">
-          <Button onClick={() => setLoginOpen(true)}>Login</Button>
-          <Button onClick={() => setSignupOpen(true)}>Signup</Button>
-        </div>
-      )}
-
       <Login 
         open={loginOpen}
         disabled={loginDisabled}
@@ -131,23 +123,49 @@ function App() {
         handleSignup={setSignupData}
       />
 
-      <Header/>
-      {
-        posts.map(({post, id}) => (
-          <Post 
-          key={id}
-          imageUrl={post.imageUrl}
-          caption={post.caption}
-          username={post.username}
-        />
-        ))
-      }
-      
+      <Header>
+        {user ? (
+          <Button onClick={() => auth.signOut()}>Logout</Button>
+        ) : (
+          <div className="app__login__btns">
+            <Button onClick={() => setLoginOpen(true)}>Login</Button>
+            <Button onClick={() => setSignupOpen(true)}>Signup</Button>
+          </div>
+        )}
+      </Header>
+
+      <div className="app__posts">
+        {
+          posts.map(({post, id}) => (
+            <Post 
+            key={id}
+            imageUrl={post.imageUrl}
+            caption={post.caption}
+            username={post.username}
+          />
+          ))
+        }
+
+<InstagramEmbed
+  url='https://instagr.am/p/Zw9o4/'
+  maxWidth={320}
+  hideCaption={false}
+  containerTagName='div'
+  protocol=''
+  injectScript
+  onLoading={() => {}}
+  onSuccess={() => {}}
+  onAfterRender={() => {}}
+  onFailure={() => {}}
+/>  
+      </div>
+
       {user ? (
         <Uploader username={user.displayName}/>
       ) : (
         <h3>You need to login first for uploading posts.</h3>
       )}
+
       {/* <Snackbar open={snackbarOpen} message={snackbarmessage}/> */}
       <RcInstaCloneBackdrop open={backdropOpen}  />
     </div>
