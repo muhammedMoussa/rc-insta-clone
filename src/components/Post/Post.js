@@ -58,9 +58,9 @@ function Post({postId, username, caption, imageUrl, loggedUser}) {
                 {cmntsBox()}
             </div>
 
-            <div className="post__commentBox">
+            <div>
                 {loggedUser ? (
-                    <div>
+                    <div  className="post__commentBox">
                         <Input
                             className="post__input"
                             type="text"

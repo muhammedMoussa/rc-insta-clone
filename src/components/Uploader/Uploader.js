@@ -82,6 +82,7 @@ function Uploader({username}) {
             </IconButton>
         </label>
         <Input 
+            className="uploader__caption"
             type="text" 
             placeholder="Caption" 
             value={caption}
@@ -97,7 +98,7 @@ function Uploader({username}) {
         />
 
         <input accept="image/*" className={classes.input} id="icon-button-file" type="file" onChange={handleChange}/>
-        <Button variant="contained" color="primary" onClick={handleUpload}>
+        <Button className="uploader__submit" variant="contained" color="primary" onClick={handleUpload}>
             Upload
         </Button>
     </div>
